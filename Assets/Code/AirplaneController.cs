@@ -13,27 +13,27 @@ public class AirplaneController : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
+    float targetHorizontalInput;
+    float targetVerticalInput;
+
     private void Update()
     {
         // inputs °¨¼è Àû¿ë
-        float targetHorizontalInput = Input.GetAxis("Horizontal");
-        float targetVerticalInput = Input.GetAxis("Vertical");
+        targetHorizontalInput = Input.GetAxis("Horizontal");
+        targetVerticalInput = Input.GetAxis("Vertical");
 
         horizontalInput = Mathf.Lerp(horizontalInput, targetHorizontalInput, Time.deltaTime * InputDamping);
         verticalInput = Mathf.Lerp(verticalInput, targetVerticalInput, Time.deltaTime * InputDamping);
-    }
 
-    void FixedUpdate()
-    {
         // move forward
-        transform.position += transform.forward * FlySpeed * Time.fixedDeltaTime;
+        transform.position += transform.forward * FlySpeed * Time.deltaTime;
 
         // yaw, pitch, roll
-        Yaw += horizontalInput * YawAmount * Time.fixedDeltaTime;
+        Yaw += horizontalInput * YawAmount * Time.deltaTime;
         float pitch = Mathf.Lerp(0, 20, Mathf.Abs(verticalInput)) * -Mathf.Sign(verticalInput);
         float roll = Mathf.Lerp(0, 30, Mathf.Abs(horizontalInput)) * -Mathf.Sign(horizontalInput);
 
         // apply rotation
-        transform.localRotation = Quaternion.Euler((Vector3.up * Yaw) + (Vector3.right * pitch) + (Vector3.forward * roll));
+        transform.rotation = Quaternion.Euler((Vector3.up * Yaw) + (Vector3.right * pitch) + (Vector3.forward * roll));
     }
 }
