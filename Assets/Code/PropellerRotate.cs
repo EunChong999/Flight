@@ -6,8 +6,8 @@ public class PropellerRotate : MonoBehaviour
 {
     public float speed;
 
-    void FixedUpdate()
+    void Update()
     {
-        transform.Rotate(0, 0, speed * Time.fixedDeltaTime, Space.Self);
+        transform.Rotate(0, 0, speed * Time.deltaTime, Space.Self);
     }
 }
